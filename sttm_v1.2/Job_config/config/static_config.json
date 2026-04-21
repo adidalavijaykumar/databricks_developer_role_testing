@@ -1,5 +1,6 @@
 
 {
+    "_comment": "Static table configuration",
   "version": "1.0",
   "name": "static_table_config",
   "description": "JSON config for queries that produce / use static rows (no external source required)",
