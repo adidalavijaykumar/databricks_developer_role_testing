@@ -1,0 +1,32 @@
+// ...existing code...
+{
+  "version": "1.0",
+  "name": "static_table_config",
+  "description": "JSON config for queries that produce / use static rows (no external source required)",
+  "database": "demo_static",
+  "table": "static_rows",
+  "ddl_file": "d:/Databricks/vscode/databricks_developer_role_testing/sttm_v1.2/ddl",
+  "seed": [
+    { "id": 1, "name": "Alice", "amount": 100.0 },
+    { "id": 2, "name": "Bob",   "amount": 200.5 },
+    { "id": 3, "name": "Carol", "amount": 150.75 }
+  ],
+  "queries": [
+    {
+      "id": "cte_static_rows",
+      "description": "Create an inline static table via a CTE and select all rows (no external source)",
+      "engine": "databricks_sql",
+      "sql": "WITH static_rows AS (SELECT 1 AS id, 'Alice' AS name, 100.0 AS amount UNION ALL SELECT 2 AS id, 'Bob' AS name, 200.5 AS amount UNION ALL SELECT 3 AS id, 'Carol' AS name, 150.75 AS amount) SELECT * FROM static_rows;"
+    },
+    {
+      "id": "values_clause",
+      "description": "Equivalent using VALUES clause (single-line SQL)",
+      "engine": "databricks_sql",
+      "sql": "SELECT * FROM (VALUES (1,'Alice',100.0),(2,'Bob',200.5),(3,'Carol',150.75)) AS t(id,name,amount);"
+    }
+  ],
+  "examples": {
+    "python_spark": "query = config['queries'][0]['sql']\ndf = spark.sql(query)\ndf.show()",
+    "databricks_sql_editor": "-- paste the query from 'queries[].sql' into the Databricks SQL editor and run"
+  }
+}
