@@ -1,0 +1,8 @@
+-- DDL: create a persisted table and populate with the static rows used by the query
+CREATE DATABASE IF NOT EXISTS demo_static;
+CREATE TABLE IF NOT EXISTS demo_static.static_rows (
+  id INT,
+  name STRING,
+  amount DOUBLE
+)
+USING DELTA;
