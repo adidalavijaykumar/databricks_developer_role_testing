@@ -1,4 +1,5 @@
 {
+  -- Databricks SQL
   sql:"""WITH static_rows AS (
         SELECT 1 AS id, 'Alice' AS name, 100.0 AS amount
         UNION ALL
