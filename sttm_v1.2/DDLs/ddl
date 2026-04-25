@@ -1,8 +1,49 @@
 -- DDL: create a persisted table and populate with the static rows used by the query
 CREATE DATABASE IF NOT EXISTS demo_static;
+
+-- Sample 1: Basic Delta table with static data
 CREATE TABLE IF NOT EXISTS demo_static.static_rows (
   id INT,
   name STRING,
   amount DOUBLE
 )
 USING DELTA;
+
+-- Sample 2: Insert sample data
+INSERT INTO demo_static.static_rows VALUES
+(1, 'Alice', 1500.00),
+(2, 'Bob', 2500.50),
+(3, 'Charlie', 3000.75);
+
+-- Sample 3: Table with additional columns and partitioning
+CREATE TABLE IF NOT EXISTS demo_static.customer_data (
+  customer_id INT,
+  customer_name STRING,
+  email STRING,
+  registration_date DATE,
+  status STRING,
+  region STRING
+)
+USING DELTA
+PARTITIONED BY (region);
+
+-- Sample 4: Table with constraints and defaults
+CREATE TABLE IF NOT EXISTS demo_static.product_catalog (
+  product_id INT NOT NULL,
+  product_name STRING NOT NULL,
+  category STRING,
+  price DOUBLE,
+  stock_quantity INT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT current_timestamp(),
+  updated_at TIMESTAMP
+)
+USING DELTA;
+
+-- Sample 5: External table pointing to cloud storage
+CREATE TABLE IF NOT EXISTS demo_static.external_data (
+  id INT,
+  value STRING,
+  timestamp TIMESTAMP
+)
+USING DELTA
+LOCATION '/mnt/data/external_data/';
